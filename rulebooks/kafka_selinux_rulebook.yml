@@ -27,5 +27,4 @@
           name: remediate_selinux
           organization: shields_down
           job_args:
-            extra_vars:
-              target_host: "{{ event.payload.commonLabels.instance }}"
+            limit: "{{ event.payload.commonLabels.instance }}"
