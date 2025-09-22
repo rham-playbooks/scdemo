@@ -1,0 +1,9 @@
+---
+# Why is provision playbook failing lint?
+exclude_paths:
+  - tf_project
+  - tfe_project
+  - aap/export
+mock_roles: []
+warn_list: []
+offline: true

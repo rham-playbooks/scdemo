@@ -1,0 +1,71 @@
+# Compiled Python files
+*.pyc
+
+# Ansible retry files
+*.retry
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# Archives
+*.tar.gz
+*.tgz
+*.zip
+
+# Local Vagrant directory
+.vagrant
+
+# Ansible tower_cli_data
+tower_cli_data/*
+
+# # Roles and collections should be pulled from galaxy
+roles/*
+collections/*
+# Except for requirements files
+!roles/requirements*.yml
+!collections/requirements*.yml
+# And any pre_config roles
+!roles/*_pre_config
+# Include my wordpress and the decom role for the moment
+!roles/wordpress
+!roles/decommission
+
+# VSCode workspace files
+*.code-workspace
+
+# Exclude log files
+*.log
+
+.ansible
+oom
+.envrc*
+
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+.terraform.lock.hcl
+terraform_apply.out
+terraform_plan.out
+aap/export/
+
+l/*
