@@ -1,0 +1,12 @@
+# Run rulebooks
+ansible-rulebook
+
+# Backend used by ansible-rulebook
+ansible-runner
+
+# Kafka client for the ansible.eda.kafka source
+aiokafka
+
+# Handy (templating + YAML parsing)
+jinja2
+pyyaml

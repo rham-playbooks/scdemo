@@ -6,10 +6,26 @@
     - name: Listen for alerts onkafka topic
       ansible.eda.kafka:
         host: ec2-13-53-45-113.eu-north-1.compute.amazonaws.com
-        port: 9092
+        port: 9094
         topic: alertmanager-alerts
         group_id: eda-selinux
       filters:
         - ansible.eda.json_filter:
         - ansible.eda.normalize_keys:
   rules:
+    # Resolve the selinux issue by running the remediate_selinux job template when conditions match
+    - name: Remediate selinux issue
+      throttle:
+        once_within: 5 minutes
+        group_by_attributes:
+          - payload.alerts[0].fingerprint
+      condition: >
+        event.payload.status == "firing" and
+        event.payload.commonLabels.alertname == "selinux not enforcing"
+      action:
+        run_job_template:
+          name: remediate_selinux
+          organization: shields_down
+          job_args:
+            extra_vars:
+              target_host: "{{ event.payload.commonLabels.instance }}"

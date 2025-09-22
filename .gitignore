@@ -1,6 +1,9 @@
 # Compiled Python files
 *.pyc
 
+# Virtual Environments
+.venv
+
 # Ansible retry files
 *.retry
 
