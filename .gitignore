@@ -41,6 +41,7 @@ collections/*
 
 # VSCode workspace files
 *.code-workspace
+.vscode
 
 # Exclude log files
 *.log

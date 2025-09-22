@@ -1,0 +1,19 @@
+---
+- name: Respond to Alert Manager alerts
+  hosts: all
+  execution_strategy: parallel
+  sources:
+    - name: Listen for alerts on kafka topic
+      ansible.eda.kafka:
+        host: ec2-13-53-45-113.eu-north-1.compute.amazonaws.com
+        port: 9092
+        topic: demo-topic
+        group_id: eda-selinux
+      filters:
+        - ansible.eda.json_filter:
+        - ansible.eda.normalize_keys:
+  rules:
+    - name: Output whole event
+      condition: event.meta is defined
+      action:
+        print_event:
