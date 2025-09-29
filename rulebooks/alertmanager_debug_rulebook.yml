@@ -7,7 +7,7 @@
         port: 5000
   rules:
     - name: Output Events
-      condition: event.payload == true
+      condition: event.payload is defined
       action:
         print_event:
 ...
