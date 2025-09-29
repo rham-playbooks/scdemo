@@ -1,0 +1,16 @@
+---
+plugin: cloud.terraform.terraform_state
+backend_type: s3
+backend_config:
+  bucket: "spaceship-windows-tfstate-rham"
+  key: "terraform.tfstate"
+  region: "eu-west-1"
+keyed_groups:
+  - prefix: tags
+    key: tag_
+hostnames:
+  - name: 'tag:Name'
+groups:
+  aws: true
+  windows: true
+...

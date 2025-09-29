@@ -2,15 +2,14 @@
 - name: Set SELinux to permissive
   hosts: all
   become: true
-  collections:
-    - ansible.posix
   pre_tasks:
-  - name: assert that we only have one host in the play
-    ansible.builtin.assert:
-      that:
-        - ansible_play_hosts | length <= 1
-      fail_msg: 'Should only be one host in the play.'
-    run_once: true
+
+    - name: Assert that we only have one host in the play # noqa: run-once[task]
+      ansible.builtin.assert:
+        that:
+          - ansible_play_hosts | length <= 1
+        fail_msg: 'Should only be one host in the play.'
+      run_once: true
   tasks:
     - name: Ensure SELinux is permissive
       ansible.posix.selinux:

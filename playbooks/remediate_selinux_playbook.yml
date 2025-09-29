@@ -3,7 +3,7 @@
   hosts: all
   become: true
   pre_tasks:
-  - name: assert that we only have one host in the play
+  - name: Assert that we only have one host in the play # noqa: run-once[task]
     ansible.builtin.assert:
       that:
         - ansible_play_hosts | length <= 1
