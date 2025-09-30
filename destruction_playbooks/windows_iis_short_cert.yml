@@ -1,0 +1,51 @@
+---
+- name: Install IIS Short Certificate Windows
+  hosts: windows
+  gather_facts: true
+  become: false
+
+  vars:
+    my_website_name: windows
+    my_domain: "spaceship.rham.dev"
+
+  tasks:
+
+    - name: Get the thumbprint
+      ansible.windows.win_command: '"C:\Program Files\OpenSSL\bin\openssl.exe" x509 -in short_certificate.pem -fingerprint -noout'
+      args:
+        chdir: C:\certificates
+      changed_when: false
+      register: thumbprint
+
+    - name: Import the host certs
+      ansible.windows.win_certificate_store:
+        path: C:\certificates\short.p12
+        key_storage: machine
+        store_location: LocalMachine
+        store_name: My
+        state: present
+
+    - name: Import the intermeidate
+      ansible.windows.win_certificate_store:
+        path: C:\certificates\long_issuing_ca.pem
+        file_type: pem
+        key_storage: machine
+        store_location: LocalMachine
+        store_name: CertificateAuthority
+        state: present
+
+    - name: My IIS site
+      microsoft.iis.website:
+        name: My Web Site
+        state: restarted
+        physical_path: C:\sites\my_web_site
+        application_pool: websites
+        bindings:
+          set:
+            - ip: "{{ ansible_interfaces.0.ipv4.address }}"
+              port: 443
+              hostname: "{{ my_website_name }}.{{ my_domain }}"
+              certificate_hash: "{{ thumbprint.stdout.split('=')[1] | replace(':', '') | trim }}"
+              certificate_store_name: My
+              protocol: https
+      register: website

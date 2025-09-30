@@ -1,0 +1,6 @@
+---
+ansible_user: Administrator
+ansible_become_method: runas
+ansible_become_user: Administrator
+ansible_connection: ssh
+ansible_shell_type: powershell
