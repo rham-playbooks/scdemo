@@ -12,6 +12,4 @@
         any:
           - event.CloudTrailEvent.eventName == 'StopInstances'
       action:
-        run_job_template:
-          name: 'Start RHEL Server - Demo Prod'
-          organization: 'Demo Prod'
+        print_event:
