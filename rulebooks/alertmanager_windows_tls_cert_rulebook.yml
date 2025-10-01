@@ -6,11 +6,8 @@
         host: 0.0.0.0
         port: 5000
   rules:
-    - name: Output Events
-      condition:
-        all:
-          - event.payload.status == 'firing'
-          - event.payload.labels.alertname == 'TLSCertificateExpiring'
+    - name: Renew Certificate
+      condition: event.payload.labels.alertname == 'TLSCertificateExpiring'
       action:
         run_job_template:
           name: 'Renew Windows Certificates - Demo Prod'
