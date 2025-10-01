@@ -7,8 +7,7 @@
         port: 5000
   rules:
     - name: Output Events
-      condition:
-          event.payload.status == 'firing' and event.payload.labels.alertname == 'TLSCertificateExpiring'
+      condition: (event.payload.status == 'firing') and (event.payload.labels.alertname == 'TLSCertificateExpiring')
       action:
         print_event:
 ...
