@@ -8,9 +8,7 @@
   rules:
     - name: Output Events
       condition:
-        all:
-          - event.payload.status == 'firing'
-          - event.payload.labels.alertname == 'TLSCertificateExpiring'
+          event.payload.status == 'firing' and event.payload.labels.alertname == 'TLSCertificateExpiring'
       action:
         print_event:
 ...
