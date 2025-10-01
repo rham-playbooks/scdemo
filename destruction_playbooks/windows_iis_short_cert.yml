@@ -1,8 +1,8 @@
 ---
 - name: Install IIS Short Certificate Windows
   hosts: all
-  gather_facts: false
-  become: true
+  gather_facts: true
+  become: false
 
   vars:
     my_website_name: windows
