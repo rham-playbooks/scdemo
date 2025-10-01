@@ -1,7 +1,7 @@
 ---
 - name: Install IIS Short Certificate Windows
   hosts: all
-  gather_facts: true
+  gather_facts: false
   become: false
 
   vars:
@@ -17,22 +17,22 @@
       changed_when: false
       register: thumbprint
 
-    - name: Import the host certs
-      ansible.windows.win_certificate_store:
-        path: C:\certificates\short.p12
-        key_storage: machine
-        store_location: LocalMachine
-        store_name: My
-        state: present
-
-    - name: Import the intermeidate
-      ansible.windows.win_certificate_store:
-        path: C:\certificates\long_issuing_ca.pem
-        file_type: pem
-        key_storage: machine
-        store_location: LocalMachine
-        store_name: CertificateAuthority
-        state: present
+#     - name: Import the host certs
+#       ansible.windows.win_certificate_store:
+#         path: C:\certificates\short.p12
+#         key_storage: machine
+#         store_location: LocalMachine
+#         store_name: My
+#         state: present
+#
+#     - name: Import the intermeidate
+#       ansible.windows.win_certificate_store:
+#         path: C:\certificates\long_issuing_ca.pem
+#         file_type: pem
+#         key_storage: machine
+#         store_location: LocalMachine
+#         store_name: CertificateAuthority
+#         state: present
 
     - name: My IIS site
       microsoft.iis.website:
