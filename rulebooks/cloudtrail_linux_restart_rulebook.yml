@@ -5,12 +5,11 @@
     - name: Listen for Cloudtrail Events
       ansible.eda.aws_cloudtrail:
         region: 'eu-west-1'
-        delay_seconds: 2
+        delay_seconds: 5
   rules:
-    - name: Output Stop and Start Events
-      condition:
-        any:
-          - event.CloudTrailEvent.eventName == 'StopInstances'
-          - event.CloudTrailEvent.eventName == 'StartInstances'
+    - name: Restart stopped RHEL machines
+      condition: event.CloudTrailEvent.eventName == 'StopInstances'
       action:
-        print_event:
+        run_job_template:
+          name: 'Start RHEL Server - Demo Prod'
+          organization: 'Demo Prod'
