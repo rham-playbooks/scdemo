@@ -11,5 +11,6 @@
       condition:
         any:
           - event.CloudTrailEvent.eventName == 'StopInstances'
+          - event.CloudTrailEvent.eventName == 'StartInstances'
       action:
         print_event:
