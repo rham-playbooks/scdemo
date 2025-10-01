@@ -7,12 +7,14 @@
 
   vars:
     instance_name: sps01.spaceship.rham.net
+    aws_region: eu-west-1
 
   tasks:
     - name: Gather instance info
       amazon.aws.ec2_instance_info:
         filters:
           "tag:Name": "{{ instance_name }}"
+        region: "{{ aws_region }}"
       register: aws_instances
 
     - name: Shutdown the AWS instances
