@@ -1,5 +1,5 @@
 ---
-- name: Install IIS Short Certificate Windows
+- name: Install IIS Long Certificate Windows
   hosts: all
   gather_facts: true
   become: false
