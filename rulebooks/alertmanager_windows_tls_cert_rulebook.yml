@@ -10,5 +10,5 @@
       condition: event.payload.commonLabels.alertname == 'TLSCertificateExpiring'
       action:
         run_job_template:
-          name: 'Renew Windows Certificates - Demo Prod'
-          organization: 'Demo Prod'
+          name: 'Renew Windows Certificates - SpaceShip'
+          organization: 'SpaceShip'
