@@ -1,0 +1,79 @@
+{
+  "m_1": {
+    "ReadOnly": "false",
+    "EventSource": "ec2.amazonaws.com",
+    "Username": "open-environment-sxrl4-admin",
+    "EventTime": "2025-10-01T14:25:32+00:00",
+    "meta": {
+      "source": {
+        "name": "Listen for Cloudtrail Events",
+        "type": "ansible.eda.aws_cloudtrail"
+      },
+      "received_at": "2025-10-01T14:27:39.967562Z",
+      "uuid": "3254e878-beb0-4f62-9305-00bb9e5226fc"
+    },
+    "EventId": "1d5a9712-0481-4110-8508-87e25ad7d9cf",
+    "EventName": "StartInstances",
+    "Resources": [
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-022cc9c3860815785"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAUNW2PMRWQB54DXRAP",
+        "arn": "arn:aws:iam::304327124077:user/open-environment-sxrl4-admin",
+        "accountId": "304327124077",
+        "userName": "open-environment-sxrl4-admin"
+      },
+      "eventTime": "2025-10-01T14:25:32Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "StartInstances",
+      "awsRegion": "eu-west-1",
+      "sourceIPAddress": "54.155.148.166",
+      "userAgent": "APN/1.0 Ansible/2.17.13 amazon.aws/10.1.1 Botocore/1.40.11",
+      "requestParameters": {
+        "instancesSet": {
+          "items": [
+            {
+              "instanceId": "i-022cc9c3860815785"
+            }
+          ]
+        }
+      },
+      "responseElements": {
+        "requestId": "f172b500-41a3-48bf-9ce0-eae6377be76c",
+        "instancesSet": {
+          "items": [
+            {
+              "instanceId": "i-022cc9c3860815785",
+              "currentState": {
+                "code": 0,
+                "name": "pending"
+              },
+              "previousState": {
+                "code": 80,
+                "name": "stopped"
+              }
+            }
+          ]
+        }
+      },
+      "requestID": "f172b500-41a3-48bf-9ce0-eae6377be76c",
+      "eventID": "1d5a9712-0481-4110-8508-87e25ad7d9cf",
+      "readOnly": "False",
+      "eventType": "AwsApiCall",
+      "managementEvent": "True",
+      "recipientAccountId": "304327124077",
+      "eventCategory": "Management",
+      "tlsDetails": {
+        "tlsVersion": "TLSv1.3",
+        "cipherSuite": "TLS_AES_128_GCM_SHA256",
+        "clientProvidedHostHeader": "ec2.eu-west-1.amazonaws.com"
+      }
+    }
+  }
+}

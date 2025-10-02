@@ -2,3 +2,5 @@
 collections:
   - name: ansible.posix
   - name: ansible.eda
+  - name: microsoft.iis
+  - name: amazon.aws

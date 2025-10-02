@@ -1,0 +1,15 @@
+---
+- name: AWS CloudTrail Monitoring Demo
+  hosts: localhost
+  sources:
+    - name: Listen for Cloudtrail Events
+      ansible.eda.aws_cloudtrail:
+        region: 'eu-west-1'
+        delay_seconds: 5
+  rules:
+    - name: Restart stopped RHEL machines
+      condition: event.CloudTrailEvent.eventName == 'StopInstances'
+      action:
+        run_job_template:
+          name: 'Start RHEL Server - Demo Prod'
+          organization: 'Demo Prod'

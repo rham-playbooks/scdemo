@@ -1,0 +1,16 @@
+---
+- name: AWS CloudTrail Monitoring Demo
+  hosts: localhost
+  sources:
+    - name: Listen for Cloudtrail Events
+      ansible.eda.aws_cloudtrail:
+        region: 'eu-west-1'
+        delay_seconds: 5
+  rules:
+    - name: Output Stop and Start Events
+      condition:
+        any:
+          - event.CloudTrailEvent.eventName == 'StopInstances'
+          - event.CloudTrailEvent.eventName == 'StartInstances'
+      action:
+        print_event:
