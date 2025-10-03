@@ -7,7 +7,7 @@
         port: 5000
   rules:
     - name: Renew Certificate
-      condition: event.payload.commonLabels.alertname == 'TLSCertificateExpiring' and event.payload.status == 'firing'
+      condition: event.payload.commonLabels.alertname == 'TLSCertificateExpiring'
       action:
         run_job_template:
           name: 'Renew Windows Certificates - SpaceShip'
