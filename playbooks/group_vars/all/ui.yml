@@ -1,0 +1,3 @@
+---
+bearer_token: "{{ vault_bearer_token }}"
+...

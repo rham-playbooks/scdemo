@@ -49,3 +49,18 @@
               certificate_store_name: My
               protocol: https
       register: website
+
+    - name: Notifiy the dashboard we're complete
+      ansible.builtin.uri:
+        method: POST
+        url: https://bridge.spaceship.rham.dev/api/controller/ui/home
+        body_format: json
+        headers:
+          Authorization: "{{ bearer_token }}"
+        body:
+          scenario: docking_refused_resolved
+        status_code:
+          - 204
+      tags: ui
+      delegate_to: localhost
+      connection: local
