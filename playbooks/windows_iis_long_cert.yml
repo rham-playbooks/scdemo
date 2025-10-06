@@ -54,7 +54,6 @@
       ansible.windows.win_uri:
         method: POST
         url: https://bridge.spaceship.rham.dev/api/controller/ui/home
-        body_format: json
         headers:
           Authorization: "{{ bearer_token }}"
         body:
