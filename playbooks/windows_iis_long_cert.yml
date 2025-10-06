@@ -51,7 +51,7 @@
       register: website
 
     - name: Notifiy the dashboard we're complete
-      ansible.builtin.uri:
+      ansible.windows.win_uri:
         method: POST
         url: https://bridge.spaceship.rham.dev/api/controller/ui/home
         body_format: json
@@ -62,5 +62,3 @@
         status_code:
           - 204
       tags: ui
-      delegate_to: localhost
-      connection: local
