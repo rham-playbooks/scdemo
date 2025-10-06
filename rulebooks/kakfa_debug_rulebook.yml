@@ -7,7 +7,7 @@
       ansible.eda.kafka:
         host: ec2-13-53-45-113.eu-north-1.compute.amazonaws.com
         port: 9094
-        topic: demo-topic
+        topic: summit-connect
         group_id: eda-selinux
       filters:
         - ansible.eda.json_filter:
