@@ -16,13 +16,7 @@
 
   rules:
     - name: Remediate selinux issue
-      condition: >
-        event.body.status == "firing" and
-        event.body.common_labels.alertname == "selinux not enforcing"
-      throttle:
-        once_within: 5 minutes
-        group_by_attributes:
-          - body.group_key
+      condition: event.body.status == "firing" and event.body.common_labels.alertname == "selinux not enforcing"
       action:
         run_job_template:
           name: Remediate SELinux - Spaceship
