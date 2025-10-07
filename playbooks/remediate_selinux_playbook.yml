@@ -14,3 +14,15 @@
       ansible.posix.selinux:
         policy: targeted
         state: enforcing
+
+    - name: Notifiy the dashboard we're complete
+      ansible.windows.win_uri:
+        method: POST
+        url: https://bridge.spaceship.rham.dev/api/controller/ui/home
+        headers:
+          Authorization: "{{ bearer_token }}"
+        body:
+          scenario: shields_down_resolved
+        status_code:
+          - 204
+      tags: ui
