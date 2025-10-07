@@ -1,0 +1,76 @@
+---
+- name: Block ICMP on RHEL and raise a ServiceNow incident (delegated)
+  hosts: all
+  become: true
+  gather_facts: true
+
+  vars:
+    impact: 1
+    urgency: 1
+    short_description: >-
+      Communications relay unreachable — ICMP blocked
+    description: |-
+      SpaceOps Alert:
+      Ping connectivity to the communications relay has been disabled.
+      Firewalld is configured to block inbound ICMP echo-requests (ping).
+
+      Time (UTC): {{ ansible_date_time.iso8601 }}
+    fw_zone: null    # e.g. "public" if using a non-default zone
+
+    # Provided sys_ids
+    assignment_group_sys_id: "91b12d5b53c72610a33138f0a0490e52"
+    cmdb_ci_sys_id: "ac705ff753147210a33138f0a0490eca"
+
+  tasks:
+    - name: Ensure firewalld is installed
+      ansible.builtin.dnf:
+        name: firewalld
+        state: present
+
+    - name: Ensure firewalld is enabled and running
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: true
+
+    - name: Block inbound ICMP echo requests (permanent + immediate)
+      ansible.posix.firewalld:
+        icmp_block: echo-request
+        state: enabled
+        immediate: true
+        permanent: true
+        zone: "{{ fw_zone | default(omit) }}"
+
+    - name: Verify ICMP echo-request is blocked
+      ansible.builtin.command:
+        cmd: firewall-cmd {{ fw_zone | ternary('--zone ' ~ fw_zone, '') }} --query-icmp-block=echo-request
+      register: icmp_blocked_check
+      changed_when: false
+      failed_when: false
+
+    - name: Pause to simulate monitoring detection window
+      ansible.builtin.pause:
+        seconds: 10
+
+    - name: Simulate monitoring tool creating incident
+      vars:
+        correlation_id: "{{ lookup('ansible.builtin.pipe', 'uuidgen') }}"
+      delegate_to: localhost
+      servicenow.itsm.incident:
+        state: new
+        caller: "admin"
+        short_description: "{{ short_description }}"
+        description: "{{ description }}"
+        impact: "{{ impact }}"
+        urgency: "{{ urgency }}"
+        # Use sys_ids for reference fields
+        assignment_group: "{{ assignment_group_sys_id }}"
+        cmdb_ci: "{{ cmdb_ci_sys_id }}"
+        other:
+          correlation_id: "{{ correlation_id }}"
+      register: create_incident
+
+    - name: Show incident outcome
+      delegate_to: localhost
+      ansible.builtin.debug:
+        var: create_incident
