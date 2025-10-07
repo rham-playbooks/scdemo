@@ -61,7 +61,7 @@
       condition: event.environment is defined and event.environment == "Production"
       action:
         run_workflow_template:
-          name: prod_raise_change
+          name: Raise Production Change
           organization: SpaceShip
           job_args:
             extra_vars:
