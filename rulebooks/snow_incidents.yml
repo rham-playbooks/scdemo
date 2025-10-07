@@ -30,8 +30,8 @@
           - sys_id
       action:
         run_job_template:
-          name: gather_machine_info_by_cmdb_ci
-          organization: Demo3
+          name: Gather Machine Info by CMDB CI
+          organization: SpaceShip
           post_events: true
           job_args:
             extra_vars:
@@ -43,7 +43,7 @@
       action:
         run_workflow_template:
           name: non_prod_servicenow_auto_remediate_selinux_workflow
-          organization: Demo3
+          organization: SpaceShip
           job_args:
             extra_vars:
               target_host: "{{ event.target_host }}"
@@ -62,7 +62,7 @@
       action:
         run_workflow_template:
           name: prod_raise_change
-          organization: Demo3
+          organization: SpaceShip
           job_args:
             extra_vars:
               # Change Request fields
