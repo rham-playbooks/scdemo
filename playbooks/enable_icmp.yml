@@ -1,0 +1,34 @@
+---
+- name: Enable ICMP (allow ping) on RHEL
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Ensure firewalld is installed
+      ansible.builtin.dnf:
+        name: firewalld
+        state: present
+
+    - name: Ensure firewalld is enabled and running
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: true
+
+    # Remove the ICMP echo-request block if present
+    - name: Unblock inbound ICMP echo requests (permanent + immediate)
+      ansible.posix.firewalld:
+        icmp_block: echo-request
+        state: disabled
+        immediate: true
+        permanent: true
+
+    - name: Verify ICMP echo-request is NOT blocked (debug only)
+      ansible.builtin.command: firewall-cmd --query-icmp-block=echo-request
+      changed_when: false
+      register: icmp_blocked_check
+
+    - name: Show firewall check result
+      ansible.builtin.debug:
+        msg: "firewall-cmd reports echo-request blocked: {{ icmp_blocked_check.stdout }}"
