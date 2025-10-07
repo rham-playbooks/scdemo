@@ -40,3 +40,15 @@
     - name: Show firewall check result
       ansible.builtin.debug:
         msg: "echo-request blocked? {{ icmp_blocked_check.stdout }} (rc={{ icmp_blocked_check.rc }})"
+
+    - name: Notifiy the dashboard we're complete
+      ansible.windows.win_uri:
+        method: POST
+        url: https://bridge.spaceship.rham.dev/api/controller/ui/home
+        headers:
+          Authorization: "{{ bearer_token }}"
+        body:
+          scenario: solar_storm_resolved
+        status_code:
+          - 204
+      tags: ui
