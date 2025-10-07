@@ -42,9 +42,10 @@
         msg: "echo-request blocked? {{ icmp_blocked_check.stdout }} (rc={{ icmp_blocked_check.rc }})"
 
     - name: Notifiy the dashboard we're complete
-      ansible.windows.win_uri:
+      ansible.builtin.uri:
         method: POST
         url: https://bridge.spaceship.rham.dev/api/controller/ui/home
+        body_format: json
         headers:
           Authorization: "{{ bearer_token }}"
         body:
@@ -52,3 +53,5 @@
         status_code:
           - 204
       tags: ui
+      delegate_to: localhost
+      connection: local
