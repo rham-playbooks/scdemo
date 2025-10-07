@@ -1,5 +1,5 @@
 ---
-- name: Remediate SELinux from Alertmanager via Kafka (normalized)
+- name: Remediate SELinux from Alertmanager via Kafka (no filters)
   hosts: all
   execution_strategy: parallel
 
@@ -10,16 +10,14 @@
         port: 9094
         topic: summit-connect
         group_id: eda-selinux
-      filters:
-        - ansible.eda.json_filter:
-        - ansible.eda.normalize_keys:
 
   rules:
     - name: Remediate selinux issue
-      condition: event.body.common_labels.alertname == "selinux not enforcing"
+      condition: event.body.commonLabels.alertname == "selinux not enforcing"
       action:
         run_job_template:
           name: Remediate SELinux - Spaceship
           organization: SpaceShip
           job_args:
-            limit: "{{ event.body.common_annotations.hostname }}"
+            # falls back to empty string if hostname missing
+            limit: "{{ event.body.commonAnnotations.hostname | default('') }}"
