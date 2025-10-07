@@ -4,6 +4,10 @@
   become: true
   gather_facts: false
 
+  vars:
+    # Set a zone if you don't use the default zone
+    fw_zone: null   # e.g. "public"
+
   tasks:
     - name: Ensure firewalld is installed
       ansible.builtin.dnf:
@@ -16,19 +20,23 @@
         state: started
         enabled: true
 
-    # Remove the ICMP echo-request block if present
     - name: Unblock inbound ICMP echo requests (permanent + immediate)
       ansible.posix.firewalld:
         icmp_block: echo-request
         state: disabled
         immediate: true
         permanent: true
+        zone: "{{ fw_zone | default(omit) }}"
 
-    - name: Verify ICMP echo-request is NOT blocked (debug only)
-      ansible.builtin.command: firewall-cmd --query-icmp-block=echo-request
-      changed_when: false
+    # This query returns RC=0 when "yes" and RC=1 when "no".
+    # Treat both as success and just report the value.
+    - name: Verify ICMP echo-request is NOT blocked
+      ansible.builtin.command:
+        cmd: firewall-cmd --query-icmp-block=echo-request {{ '--zone ' ~ fw_zone if fw_zone else '' }}
       register: icmp_blocked_check
+      changed_when: false
+      failed_when: false
 
     - name: Show firewall check result
       ansible.builtin.debug:
-        msg: "firewall-cmd reports echo-request blocked: {{ icmp_blocked_check.stdout }}"
+        msg: "echo-request blocked? {{ icmp_blocked_check.stdout }} (rc={{ icmp_blocked_check.rc }})"
