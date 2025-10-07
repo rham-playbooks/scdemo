@@ -17,10 +17,8 @@
         implementation_plan_parsed: "{{ implementation_plan if (implementation_plan is mapping) else (implementation_plan | from_json) }}"
 
     - name: Emit parsed implementation plan for EDA
-      ansible.builtin.set_stats:
-        data:
-          implementation_plan_json: "{{ implementation_plan_parsed }}"
-        aggregate: false
+      ansible.builtin.set_fact:
+        implementation_plan_json: "{{ implementation_plan_parsed }}"
 
     - name: Preflight — ensure payload arrived from workflow artifacts
       ansible.builtin.assert:
