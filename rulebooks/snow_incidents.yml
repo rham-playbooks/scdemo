@@ -66,7 +66,7 @@
           job_args:
             extra_vars:
               # Change Request fields
-              change_short_description: "Emergency change: Enforce SELinux on {{ event.target_host | default('unknown host') }}"
+              change_short_description: "Emergency change: Remediate Comms on {{ event.target_host | default('unknown host') }}"
               change_description: >
                 Automated emergency change created by EDA.
                 Incident: {{ event.incident_number | default('unknown') }}
@@ -74,7 +74,7 @@
                 Environment: {{ event.environment | default('unknown') }}
                 Original description: {{ event.description | default('') }}
 
-                When the change is approved, the SELinux policy will be enforced on the host uing Event Driven Ansible.
+                When the change is approved, the communication relay will be reset by Event Driven Ansible.
               change_impact: high
               change_urgency: high
               change_assignment_group: "Event Driven Ansible"
