@@ -24,7 +24,7 @@
         event.payload.commonLabels.alertname == "selinux not enforcing"
       action:
         run_job_template:
-          name: remediate_selinux
+          name: Remediate SELinux - Spaceship
           organization: SpaceShip
           job_args:
-            limit: "{{ event.payload.commonLabels.instance }}"
+            limit: "{{ event.payload.commonAnnotations.hostname }}"
