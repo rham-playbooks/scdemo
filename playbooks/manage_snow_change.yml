@@ -28,7 +28,7 @@
     # Implementation execution defaults (can be overridden by caller)
     # implementation_job_template_name: "se_linux_remediation"
     implementation_job_template_name: "{{ implementation_job_template_name }}"
-    implementation_job_template_org: "Demo3"
+    implementation_job_template_org: "SpaceShip"
 
   tasks:
     ################################################################################################

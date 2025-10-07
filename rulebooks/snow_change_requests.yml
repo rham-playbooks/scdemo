@@ -23,9 +23,9 @@
           - sys_id
       condition: event.state == '-1'
       action:
-        run_workflow_template:
-          name: prod_run_implementation_plan
-          organization: Demo3
+        run_job_template:
+          name: Run Implementation Plan from Change Request
+          organization: SpaceShip
           job_args:
             extra_vars:
               # raw JSON; parse in the playbook using from_json
