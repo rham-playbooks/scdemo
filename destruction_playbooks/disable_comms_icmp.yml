@@ -63,9 +63,6 @@
         description: "{{ description }}"
         impact: "{{ impact }}"
         urgency: "{{ urgency }}"
-        # Use sys_ids for reference fields
-        assignment_group: "{{ assignment_group_sys_id }}"
-        cmdb_ci: "{{ cmdb_ci_sys_id }}"
         other:
           assignment_group: "91b12d5b53c72610a33138f0a0490e52"   # sys_id OK here
           cmdb_ci: "ac705ff753147210a33138f0a0490eca"           # sys_id OK here
